@@ -1,0 +1,65 @@
+{% extends '@App/default/base.html.twig' %}
+{% block body %}
+    <a class="btn btn-default" href="/app_dev.php/films">Back to List</a>
+    <hr>
+    <div style="clear: both; padding: 10px;">
+        <a href="{{ path('films_details', {'id': film.id}) }}">{{ film.name }}</a>
+        <p>
+            <a href="{{ path('films_details', {'id': film.id}) }}">
+                <img  style="float: left;margin: 0 10px 0 0;" src="{{ vich_uploader_asset(film, "imageFile") }}" alt={{ film.imageName}} width="200" height="400">
+            </a>
+                   <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                       Жанр:
+                    </span>
+            {% for films in film.category.toArray %}
+                {{ films.name }}
+            {% endfor %}
+
+        </p>
+        <p>
+                  <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Выпущено:
+                  </span>{{ film.producer }}
+        </p>
+        <p>
+                  <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Режиссер:
+                  </span>{{ film.producer }}
+        </p>
+        <p>
+                 <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    В главных ролях:
+                 </span>{{ film.mainrole }}
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Возрастное ограничение:
+                    </span>{{ film.ageQualification }}
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Продолжительность:
+                    </span><span style="color:green">{{ film.duration }}</span>
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Формат:
+                    </span><span style="color: blue">{{ film.format }}</span>
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Зал:
+                    </span>{{ film.hole }}
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Сеансы:
+                    </span>
+        </p>
+        <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    О фильме:
+                    </span>{{ film.annotation }}
+        </p>
+    </div>
+{% endblock %}

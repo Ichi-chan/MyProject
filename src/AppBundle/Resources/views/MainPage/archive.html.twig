@@ -1,0 +1,82 @@
+{# total items count #}
+{% extends '@App/default/base.html.twig' %}
+{% block body %}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+
+
+
+    {% for film in pagination %}
+
+        <div style="clear: both; padding: 10px; border: 4px double black; height: 500px">
+            <a href="{{ path('films_details', {'id':film.id}) }}">{{ film.name }}</a>
+            <p>
+                <span style="float: right; font-size: 15px;padding: 2px; font-weight: bold;color: red">
+                    {{ film.releasInWord|date('F j, Y') }}
+                </span>
+            </p>
+            <p>
+                <img  style="float: left;margin: 0 10px 0 0;" src="{{ film.imageName }}" alt="left" width="200" height="400">
+
+            </p>
+
+                <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                       Жанр:
+                    </span>
+            {% for films in film.category.toArray %}
+                <a href="{{ path('choose_category',{'id':films.id}) }}">{{ films.name }}</a>
+            {% endfor %}
+
+            <p>
+                  <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Выпущено:
+                  </span>{{ film.released|date('F j,Y') }}
+            </p>
+            <p>
+                  <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Режиссер:
+                  </span>{{ film.producer }}
+            </p>
+            <p>
+                 <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    В главных ролях:
+                 </span>{{ film.mainrole }}
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Возрастное ограничение:
+                    </span>{{ film.ageQualification }}
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Продолжительность:
+                    </span><span style="color:green">{{ film.duration }}</span>
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Формат:
+                    </span><span style="color: blue">{{ film.format }}</span>
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Зал:
+                    </span>{{ film.hole }}
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    Сеансы:
+                    </span>
+            </p>
+            <p>
+                    <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+                    О фильме:
+                    </span>{{ film.annotation }}
+            </p>
+        </div>
+    {% endfor %}
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination)}}
+    </div>
+{% endblock %}

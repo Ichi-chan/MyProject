@@ -1,0 +1,6 @@
+services:
+    app.form.film.add.form:
+        class: AppBundle\Form\FilmAddFormType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }

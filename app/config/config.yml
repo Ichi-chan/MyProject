@@ -25,10 +25,6 @@ knp_paginator:
         sort_field_name: sort          # sort field query parameter name
         sort_direction_name: direction # sort direction query parameter name
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
-
-
-
-
 parameters:
     locale: en
 
@@ -58,11 +54,10 @@ framework:
 
 # Twig Configuration
 twig:
-<<<<<<< HEAD
+
     form_themes:
       - 'VichUploaderBundle:Form:fields.html.twig'
-=======
->>>>>>> origin/master
+
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 

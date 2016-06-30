@@ -34,18 +34,8 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="{{ path('film_list') }}">Today</a></li>
-                <li role="presentation"><a href="{{ path('film_soon_list') }}">Soon</a></li>
-                <li role="presentation"><a href="{{ path('film_archive_list') }}">Archive</a></li>
-                <li role="presentation"><a href="#">Film's bar Afina</a></li>
-                <li role="presentation"><a href="#">Price</a></li>
-                <li role="presentation"><a href="{{path('about_list')  }}">About</a></li>
-                <li role="presentation"><a href="#">FAQ</a></li>
-                <li role="presentation"><a href="{{ path('films_append') }}">Add Film</a></li>
-            </ul>
-
+        <div id="navbar" class="nav navbar-header">
+                {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
         </div><!--/.nav-collapse -->
     </div>
 </nav>

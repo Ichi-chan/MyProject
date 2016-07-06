@@ -91,7 +91,10 @@ class Film
      */
     private $annotation;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Place", mappedBy="films")
+     */
+    private $place;
     /**
      * @var \DateTime
      * @ORM\Column(name="realeasInWorld",type="datetime",)
@@ -368,10 +371,99 @@ class Film
     {
         $this->releasInWord = $releasInWord;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * @param mixed $place
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    }
     public function __construct()
     {
         $this->updatedAt=new \DateTime('now');
         $this->category=new ArrayCollection();
+        $this->place=new ArrayCollection();
     }
 
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Film
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Film
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category->removeElement($category);
+    }
+
+    /**
+     * Add place
+     *
+     * @param \AppBundle\Entity\Place $place
+     *
+     * @return Film
+     */
+    public function addPlace(\AppBundle\Entity\Place $place)
+    {
+        $this->place[] = $place;
+
+        return $this;
+    }
+
+    /**
+     * Remove place
+     *
+     * @param \AppBundle\Entity\Place $place
+     */
+    public function removePlace(\AppBundle\Entity\Place $place)
+    {
+        $this->place->removeElement($place);
+    }
 }

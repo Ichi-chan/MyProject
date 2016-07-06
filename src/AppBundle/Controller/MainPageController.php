@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Film;
+use AppBundle\Form\ChoicePlaceFormType;
 use AppBundle\Form\FilmAddFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -120,6 +121,19 @@ class MainPageController extends Controller
         return array('form' => $form->createView());
     }
 
+ /*   /**
+     * @Route("/films/ee", name="place_e")
+     * @Template()
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+   /* public function showAction(Request $request)
+    {
+        $form=$this->createForm(ChoicePlaceFormType::class,100);
+        $form->handleRequest($request);
+        return array('form'=>$form->createView());
+    }*/
+
     /**
      * @Route("/films/details/{id}",name="films_details")
      * @Template()
@@ -183,6 +197,15 @@ class MainPageController extends Controller
     public  function categoryAction(Category $id)
     {
         return array('films'=>$id->getFilms());
+    }
+
+    /**
+     * @Route("/film/place_reserved", name="plane_price")
+     * @Template("@App/MainPage/plane_price.html.twig")
+     */
+    public function reservAction()
+    {
+
     }
     /**
      * @Route("/about", name="about_list")

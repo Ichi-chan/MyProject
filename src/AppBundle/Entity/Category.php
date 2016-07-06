@@ -84,4 +84,28 @@ class Category
     public function __construct() {
         $this->films = new ArrayCollection();
     }
+
+    /**
+     * Add film
+     *
+     * @param \AppBundle\Entity\Film $film
+     *
+     * @return Category
+     */
+    public function addFilm(\AppBundle\Entity\Film $film)
+    {
+        $this->films[] = $film;
+
+        return $this;
+    }
+
+    /**
+     * Remove film
+     *
+     * @param \AppBundle\Entity\Film $film
+     */
+    public function removeFilm(\AppBundle\Entity\Film $film)
+    {
+        $this->films->removeElement($film);
+    }
 }

@@ -10,8 +10,8 @@
                     {% for j in 0.. 10 %}
                         <td>
                             <p>
-                                <button style="background: #2aabd2; width: 80px; height: 40px;
-border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px;" name="{{ i }}-{{ j }}"> {{ j+1 }}</button>
+                                <button style="float-displace: ident;' background: #2aabd2; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px;" name="{{ i }}-{{ j }}; "> {{ j+1 }}</button>
                             </p>
                         </td>
                     {% endfor %}
@@ -38,6 +38,7 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Заняты�
                 </td>
             </tr>
         </table>
+
         <button style="text-align: center;background: #0088CC; width: 100px; height: 40px;
 border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reserved</button>
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" name="Launch demo modal">
@@ -47,21 +48,22 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reser
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <form class="modal-content" method="post" action="{{ path('send_mile') }}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" name="X"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                     </div>
                     <div class="modal-body">
-                        Enter ur Name
+                       <strong>Enter ur Name</strong> <p><input name="name" maxlength="25" size="40" ></p>
                         <br>
-                        Enter ur Mail Adress
+                        <strong>Enter ur Mail Adress</strong> <p><input name="mail" maxlength="25" size="40"></p>
+                          <p><input id="temp" name="temp" size="40" type="hidden"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" name="close">Close</button>
-                        <button type="button" class="btn btn-primary" name="save changes">Save changes</button>
+                        <button type="submit" class="btn btn-primary" name="save changes" id="save changes">Save changes</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -76,7 +78,7 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reser
             var str;
             for (var i = 0; i < k.length; i++)
                 k[i].onclick = function () {
-                    if(this.name!="Reserv" && this.name!="Launch demo modal" &&this.name!="close" && this.name!="save changes" && this.name!="X") {
+                    if(this.name!="Reserv" && this.name!="Launch demo modal" && this.name!="close" && this.name!="save changes" && this.name!="X") {
                         this.disabled = true;
                       //  alert(this.id);
                         str+=this.name+',';
@@ -84,7 +86,26 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reser
                     }
                     if(this.name=="Reserv")
                     {
-                        alert(str);
+                        str=str.substr(9);
+                        //alert(str);
+                    }
+                    if(this.name=="Launch demo modal")
+                    {
+                        //alert("mraz");
+                        str1=str.substr(9);
+                        str2=str1.substring(0, str1.length - 1);
+                        document.getElementById('temp').value=str2;
+                    }
+                    if(this.name=="save changes")
+                    {
+
+                        str=str.substr(9);
+                       // alert("asdasdsad "+str2);
+
+                        //$.form.action();
+                       // $.post('#',str2,'save changes');
+                        $("button.close").trigger("click");
+                        //ichichanshka@gmail.com
                     }
                 }
         }

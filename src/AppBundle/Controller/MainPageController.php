@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Film;
+use AppBundle\Entity\Place;
 use AppBundle\Form\ChoicePlaceFormType;
 use AppBundle\Form\FilmAddFormType;
+use AppBundle\Form\Type\ModalFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -121,18 +123,44 @@ class MainPageController extends Controller
         return array('form' => $form->createView());
     }
 
- /*   /**
-     * @Route("/films/ee", name="place_e")
+    /**
+     * @Route("/films/pl", name="place_e")
      * @Template()
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-   /* public function showAction(Request $request)
+    public function placeAction(Request $request)
     {
-        $form=$this->createForm(ChoicePlaceFormType::class,100);
+        $form=$this->createForm(ChoicePlaceFormType::class);
+        $form->handleRequest($request);
+
+        /*$palce=new Place();
+        $this->get('app.form.film.add.form');
+        $form=$this->createForm(FilmAddFormType::class, $film);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($film);
+            $em->flush();
+            $this->addFlash('notice', 'Film Added');
+
+            return $this->redirectToRoute('film_list');
+        }*/
+        return array('form'=>$form->createView());
+    }
+
+    /**
+     * @Route("/films/modal", name="modal_form")
+     * @Template("@App/MainPage/modal_form.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function modal_formAction(Request $request)
+    {
+        $form=$this->createForm(ModalFormType::class);
         $form->handleRequest($request);
         return array('form'=>$form->createView());
-    }*/
+    }
 
     /**
      * @Route("/films/details/{id}",name="films_details")
@@ -203,9 +231,9 @@ class MainPageController extends Controller
      * @Route("/film/place_reserved", name="plane_price")
      * @Template("@App/MainPage/plane_price.html.twig")
      */
-    public function reservAction()
+    public function reservAction(Request $request)
     {
-
+        
     }
     /**
      * @Route("/about", name="about_list")
@@ -215,4 +243,5 @@ class MainPageController extends Controller
    {
        
    }
+    
 }

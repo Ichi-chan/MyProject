@@ -1,0 +1,4 @@
+services:
+    app.mailer:
+        class:  AppBundle\Controller\MailController
+        arguments:    [sendmail]

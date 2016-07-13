@@ -1,0 +1,25 @@
+{% extends '@App/default/base.html.twig' %}
+
+{% block body %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" method="post" action="{{ path('send_mile') }}">
+                <div class="modal-header">
+                    {{ form_row(form.X ) }}
+                </div>
+                <div class="modal-body">
+                    <strong>Enter ur Name</strong>
+                    <p>{{ form_row(form.name) }}</p>
+                    <br>
+                    <strong>Enter ur Mail Adress</strong>
+                    <p>{{ form_row(form.mail) }}</p>
+                    <p>{{ form_row(form.temp) }}</p>
+                </div>
+                <div class="modal-footer">
+                    {{ form_row(form.close) }}
+                    {{ form_row(form.sendmessage) }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,10 +1,13 @@
 <?php
 namespace AppBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 
 class ModalFormType extends AbstractType
 {
@@ -40,7 +43,7 @@ class ModalFormType extends AbstractType
             )
             ->add(
                 'mail',
-                TextType::class,
+                EmailType::class,
                 array(
                     "attr" => array(
                         'name' => "mail",
@@ -51,14 +54,13 @@ class ModalFormType extends AbstractType
             )
             ->add(
                 'temp',
-                TextType::class,
+                HiddenType::class,
                 array(
                     "attr" => array(
                         'id' => "temp",
                         'name' => "temp",
                         'maxlength' => 25,
                         'size' => 40,
-                        'type' => "hidden",
                     )
                 )
             )

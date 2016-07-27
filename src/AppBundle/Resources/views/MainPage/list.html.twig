@@ -18,12 +18,13 @@
             </p>
             <p>
                 <a href="{{ path('films_details', {'id':film.id}) }}">
-                    <img  style="float: left;margin: 0 10px 0 0;" src="{{ vich_uploader_asset(film, "imageFile") }}" alt={{ film.imageName }} width="200" height="400">
+                    <img style="float: left;margin: 0 10px 0 0;" src="{{ vich_uploader_asset(film, "imageFile") }}"
+                         alt={{ film.imageName }} width="200" height="400">
                 </a>
 
             </p>
 
-                <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
+        <span style="text-align: left; font-size: 15px; padding: 2px; font-weight: bold;">
                        Жанр:
                     </span>
             {% for films in film.category.toArray %}
@@ -75,14 +76,18 @@
                     О фильме:
                     </span>{{ film.annotation }}
             </p>
-            <span style="float: right;">
+        <span style="float: right;">
                 <a class="btn btn-default" href="{{ path('film_edit', {'id': film.id}) }}">Edit</a>
             </span>
-            <a class="btn btn-default" href="{{ path('place_e') }}">Resevation</a>
+
+                {% if but==1 %}
+                <a class="btn btn-default" href="{{ path('place_e',{'id':film.id}) }}">Resevation</a>
+                {% endif %}
+
         </div>
     {% endfor %}
     {# display navigation #}
     <div class="navigation">
-        {{ knp_pagination_render(pagination)}}
+        {{ knp_pagination_render(pagination) }}
     </div>
 {% endblock %}

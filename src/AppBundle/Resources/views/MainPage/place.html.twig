@@ -1,46 +1,47 @@
 {% extends '@App/default/base.html.twig' %}
 
 {% block body %}
-    <div>
-        <table>
-            <copation> Place in Sinema</copation>
-            {% for i in 0..9 %}
+    <div style="margin-left:25%;">
 
+        <table
+                style="font-style: italic; width: 80%;">
+            <copation>
+                <span
+                        style="margin-left: 35%; font-style: inherit; font-size:  25px;color: black; font-weight: bold">Place in Sinema
+                </span>
+            </copation>
+            {% for i in 1..10 %}
                 <tr>
-                    <th style="font-style: italic">Ряд {{ i+1 }}</th>
-                    {% for j in 0..9 %}
-                    <td>
-                        {{ form_widget(form['['~i~']-['~j~']']) }}
-                    </td>
+                    <th style="font-style: italic; height: 60px;">Ряд {{ i+1 }}</th>
+                    {% for j in 1..10 %}
+                        <td>
+                            {{ form_widget(form['['~i~']-['~j~']']) }}
+                        </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </table>
     </div>
-    {{ dump(form) }}
     {{ form_row(form.Reserved) }}
 
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <form class="modal-content" method="post" action="{{ path('send_mile') }}">
+            <form class="modal-content" method="post" action="{{ path('send_mile',{ 'id': film.id }) }}">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" name="X"><span
-                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
                     <strong>Enter ur Name</strong>
-                    <p><input name="name" maxlength="25" size="40"></p>
+                    <p>{{ form_row( modalForm.name) }}</p>
                     <br>
                     <strong>Enter ur Mail Adress</strong>
-                    <p><input name="mail" maxlength="25" size="40"></p>
-                    <p><input id="temp" name="temp" size="40" type="hidden"></p>
+                    <p>{{ form_row( modalForm.mail) }}</p>
+                    <p>{{ form_row( modalForm.temp) }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" name="close">Close</button>
-                    <button type="submit" class="btn btn-primary" name="save changes" id="save changes">Save changes
-                    </button>
+                    {{ form_row(modalForm.close) }}
+                    {{ form_row(modalForm.sendmessage) }}
                 </div>
             </form>
         </div>
@@ -49,42 +50,44 @@
 
 {% block javascripts %}
     <script>
-        window.onload = function () {
-            var k = document.getElementsByTagName("button");
+        $(function () {
+            var k = $("button");
+            var key = 0;
             var str;
-            for (var i = 0; i < k.length; i++)
-                k[i].onclick = function () {
-                    if (this.name != "Reserv" && this.name != "choice_place_form[Reserved]" && this.name != "close" && this.name != "save changes" && this.name != "X") {
-                        this.disabled = true;
-                        //  alert(this.textContent);
+            for (var i = 0; i < k.length; i++) {
+                var but = k[i];
+                $(but).click(function () {
+                    //alert(but);
+                    if (this.name != "choice_place_form[Reserved]" && this.name != "modal_form[close]" && this.name != "modal_form[sendmessage]" && this.name != "modal_form[X]") {
+                        $(this).prop('disabled', true);
+                        $(this).css('background-color', "#868686");
                         str += this.textContent + ',';
-                        this.style.background = '#868686';
                     }
-                    if (this.name == "Reserv") {
-                        // str = str.substr(9);
-                        //alert(str);
-                    }
+
                     if (this.name == "choice_place_form[Reserved]") {
-                        //  alert("tu-tu-ru");
-                        // str1 = str.substr(9);
-                        //  str2 = str1.substring(0, str1.length - 1);
-                        //document.getElementById('temp').value = str;
-
-
+                        if (key == 0) {
+                            str = str.substring(0, str.length - 1);
+                            str = str.substr(9);
+                        }
+                        if (key > 0) {
+                            str = str.substring(0, str.length - 1);
+                        }
+                        // alert(str);
+                        $("#modal_form_temp").val(str.trim());
                     }
-                    if (this.name == "save changes") {
-                        // str = str.substr(9);
-                        str = str.substring(0, str.length - 1);
-                        str = str.substr(9);
-                        document.getElementById('temp').value = str.trim();
-                        // alert("asdasdsad "+str2);
 
-                        //$.form.action();
-                        // $.post('#',str2,'save changes');
-                        //$("button.close").trigger("click");
-                        //ichichanshka@gmail.com
+                    if (this.name == "modal_form[close]") {
+                        key += 1;
+                        for (var j = 1; j < k.length - 3; j++) {
+                            if (str.indexOf(k[j].textContent) != -1) {
+                                $(k[j]).prop('disabled', false);
+                                $(k[j]).css('background-color', '#337ab7');
+                            }
+                        }
+                        str = "";
                     }
-                }
-        }
+                })
+            }
+        })
     </script>
 {% endblock %}

@@ -24,7 +24,7 @@ class Place
     /**
      * @var string
      * 
-     * @ORM\Column(name="num_place", type="string", length=10)
+     * @ORM\Column(name="num_place", type="string", length=1000)
      */
     private $num_place;
 

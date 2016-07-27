@@ -3,7 +3,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Category;
-use AppBundle\Form\CategoryAddForm;
+use AppBundle\Form\CategoryAddFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function createCategory(Request $request)
     {
         $category=new Category();
-        $form=$this->createForm(CategoryAddForm::class, $category);
+        $form=$this->createForm(CategoryAddFormType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

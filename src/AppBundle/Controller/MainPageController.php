@@ -25,23 +25,24 @@ class MainPageController extends Controller
      */
     public function listAction(Request $request)
     {
-        $date=new \DateTime();
-        $newdate= clone $date->modify('+2 weeks');
-        $lastdate=$date->modify('-4 weeks');
-        $repository=$this->getDoctrine()
+        $vew_but=1;
+        $date = new \DateTime();
+        $newdate = clone $date->modify('+2 weeks');
+        $lastdate = $date->modify('-4 weeks');
+        $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Film');
-        $qb=$repository->createQueryBuilder('t')
+        $qb = $repository->createQueryBuilder('t')
             ->where('t.releasInWord >:term')
             ->andWhere('t.releasInWord <:term2')
-            ->setParameters(['term'=>$lastdate, 'term2'=>$newdate])
+            ->setParameters(['term' => $lastdate, 'term2' => $newdate])
             ->getQuery();
-            $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $request->query->getInt('page',1)
-            ,2
+            $request->query->getInt('page', 1)
+            , 2
         );
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination,'but'=>$vew_but);
 
     }
 
@@ -54,20 +55,21 @@ class MainPageController extends Controller
      */
     public function soonListAction(Request $request)
     {
-        $date=new \DateTime();
-        $repository=$this->getDoctrine()
+        $vew_but=0;
+        $date = new \DateTime();
+        $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Film');
-        $qb=$repository->createQueryBuilder('t')
+        $qb = $repository->createQueryBuilder('t')
             ->where('t.releasInWord >:term')
             ->setParameter('term', $date->modify('+2 weeks'))
             ->getQuery();
-           $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $request->query->getInt('page',1)
-            ,2
+            $request->query->getInt('page', 1)
+            , 2
         );
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination, 'but'=>$vew_but);
 
     }
 
@@ -80,25 +82,26 @@ class MainPageController extends Controller
      */
     public function archiveAction(Request $request)
     {
-
-        $date=new \DateTime();
-        $newdate=new \DateTime();
-        $lastdate= $date->modify('-6 years');
-        $repository=$this->getDoctrine()
+        $vew_but=0;
+        $date = new \DateTime();
+        $newdate = new \DateTime();
+        $lastdate = $date->modify('-6 years');
+        $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Film');
-        $qb=$repository->createQueryBuilder('t')
+        $qb = $repository->createQueryBuilder('t')
             ->where('t.releasInWord >:term')
             ->andWhere('t.releasInWord<=:term2')
-            ->setParameters(['term'=> $lastdate,'term2'=>$newdate])
+            ->setParameters(['term' => $lastdate, 'term2' => $newdate])
             ->getQuery();
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $request->query->getInt('page',1)
-            ,2
+            $request->query->getInt('page', 1)
+            , 2
         );
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination, 'but'=>$vew_but);
     }
+
     /**
      * @Route("/films/append", name="films_append")
      * @Template()
@@ -107,11 +110,11 @@ class MainPageController extends Controller
      */
     public function createAction(Request $request)
     {
-        $film=new Film();
+        $film = new Film();
         $this->get('app.form.film.add.form');
-        $form=$this->createForm(FilmAddFormType::class, $film);
+        $form = $this->createForm(FilmAddFormType::class, $film);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($film);
             $em->flush();
@@ -124,29 +127,24 @@ class MainPageController extends Controller
     }
 
     /**
-     * @Route("/films/pl", name="place_e")
+     * @Route("/films/pl/{id}", name="place_e")
      * @Template()
+     * @param Film $film
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function placeAction(Request $request)
+    public function placeAction(Film $film, Request $request)
     {
-        $form=$this->createForm(ChoicePlaceFormType::class);
-        $form->handleRequest($request);
+        $place=$this->getDoctrine()
+            ->getRepository(Place::class)
+            ->findOneByFilms($film->getId());
 
-        /*$palce=new Place();
-        $this->get('app.form.film.add.form');
-        $form=$this->createForm(FilmAddFormType::class, $film);
+        $form = $this->createForm(ChoicePlaceFormType::class, $place);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($film);
-            $em->flush();
-            $this->addFlash('notice', 'Film Added');
+        $modal_form=$this->createForm(ModalFormType::class);
+       // $modal_form->handleRequest();
 
-            return $this->redirectToRoute('film_list');
-        }*/
-        return array('form'=>$form->createView());
+        return array('film' => $film, 'form' => $form->createView(),'modalForm'=>$modal_form->createView());
     }
 
     /**
@@ -157,9 +155,9 @@ class MainPageController extends Controller
      */
     public function modal_formAction(Request $request)
     {
-        $form=$this->createForm(ModalFormType::class);
+        $form = $this->createForm(ModalFormType::class);
         $form->handleRequest($request);
-        return array('form'=>$form->createView());
+        return array('form' => $form->createView());
     }
 
     /**
@@ -192,13 +190,13 @@ class MainPageController extends Controller
     /**
      * @Route("/film/edit/{id}",name="film_edit")
      * @Template()
-     * @param Film    $film
+     * @param Film $film
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Film $film, Request $request)
     {
-        $form=$this->createForm(FilmAddFormType::class, $film);
+        $form = $this->createForm(FilmAddFormType::class, $film);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -222,9 +220,9 @@ class MainPageController extends Controller
      * @return array
      * @internal param Request $request
      */
-    public  function categoryAction(Category $id)
+    public function categoryAction(Category $id)
     {
-        return array('films'=>$id->getFilms());
+        return array('films' => $id->getFilms());
     }
 
     /**
@@ -233,15 +231,16 @@ class MainPageController extends Controller
      */
     public function reservAction(Request $request)
     {
-        
+
     }
+
     /**
      * @Route("/about", name="about_list")
      * @Template()
      */
-   public function aboutAction()
-   {
-       
-   }
-    
+    public function aboutAction()
+    {
+
+    }
+
 }

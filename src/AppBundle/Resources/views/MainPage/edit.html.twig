@@ -6,7 +6,7 @@
         {% set subject =  form.parent.vars.value %}
         {% if subject.id and attribute(subject, name) %}
             <a href="{{ asset(vich_uploader_asset(subject, name)) }}" target="_blank">
-                <img src="{{ asset(vich_uploader_asset(subject, name)) }}" width="200" />
+                <img src="{{ asset(vich_uploader_asset(subject, name)) }}" width="200"/>
             </a><br/>
         {% endif %}
         {% set type = type|default('file') %}

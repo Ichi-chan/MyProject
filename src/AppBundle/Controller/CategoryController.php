@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function createCategory(Request $request)
     {
         $category=new Category();
-        $form=$this->createForm(CategoryAddFormType::class, $category);
+        $form=$this->createForm(CategoryAddForm::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

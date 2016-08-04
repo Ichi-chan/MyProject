@@ -15,32 +15,18 @@ class ModalFormType extends AbstractType
     {
 
         $builder->add(
-            'X',
-            SubmitType::class,
+            'name',
+            TextType::class,
             array(
                 "attr" => array(
-                    'lable' => "X",
-                    'class' => "close",
-                    'type' => "button",
-                    'data-dismiss' => "modal",
-                    'aria-label' => "Close",
-                    'name' => "X",
+                    'name' => "name",
+                    'maxlength' => 25,
+                    'size' => 40,
+                    'class' => 'form-control',
+                    'style' => 'margin-bottom 15px',
                 )
             )
         )
-            ->add(
-                'name',
-                TextType::class,
-                array(
-                    "attr" => array(
-                        'name' => "name",
-                        'maxlength' => 25,
-                        'size' => 40,
-                        'class' => 'form-control',
-                        'style' => 'margin-bottom 15px',
-                    )
-                )
-            )
             ->add(
                 'mail',
                 EmailType::class,
@@ -54,7 +40,7 @@ class ModalFormType extends AbstractType
             )
             ->add(
                 'temp',
-                HiddenType::class,
+                TextType::class,
                 array(
                     "attr" => array(
                         'id' => "temp",
@@ -70,7 +56,7 @@ class ModalFormType extends AbstractType
                 array(
                     'label' => "close",
                     "attr" => array(
-                        'class' => 'btn btn-default',
+                        'class' => 'btn btn-default btn-reserved',
                         'name' => "close",
                         'data-dismiss' => "modal",
                         'type' => "button",
@@ -83,10 +69,9 @@ class ModalFormType extends AbstractType
                 array(
                     'label' => "Send Message",
                     "attr" => array(
-                        'class' => 'btn btn-primary',
+                        'class' => 'btn btn-primary btn-lg btn-reserved',
                         'name' => "send message",
                         'id' => "send message",
-                        'type' => "submit",
                     )
                 )
             );

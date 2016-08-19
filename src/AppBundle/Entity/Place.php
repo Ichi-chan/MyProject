@@ -27,6 +27,12 @@ class Place
      * @ORM\Column(name="num_place", type="string", length=1000)
      */
     private $num_place;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=20)
+     */
+    private $email;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Film", inversedBy="place")
@@ -80,6 +86,22 @@ class Place
     public function setFilms($films)
     {
         $this->films = $films;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
 

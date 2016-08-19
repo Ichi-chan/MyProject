@@ -3,10 +3,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Film;
 use AppBundle\Entity\Place;
-use AppBundle\Entity\Mail;
+//use AppBundle\Entity\Mail;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Tests;
+//use Symfony\Component\HttpKernel\Tests;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ChoicePlaceFormType;
@@ -29,29 +29,24 @@ class MailController extends Controller
      */
     public function placeAction(Film $film, Request $request)
     {
-        /** @var Film $film */
-        /** @var Place $place */
-        $place = $this->getDoctrine()
+        $places = $this->getDoctrine()
             ->getRepository(Place::class)
             ->findByFilms($film->getId());
-        $mail_db=new Mail();
-        $leng=count($place);
-        $mas='';
-        // добавить проверку условия чтоб выбирались места по ид фильма
-        for($i=0;$i<count($place);$i++)
+        $mas=',';
+        /** @var Place $place */
+        foreach ($places as $place)
         {
-            //$place->getNum
-            $mas=$mas.','.$place[$i]->getNumPlace();//=','.$place[$i]->getNumPlace();
+            $mas=$mas.','.$place->getNumPlace();
         }
         $form = $this->createForm(ChoicePlaceFormType::class, null, ['places' => $mas]);
         $modal_form = $this->createForm(ModalFormType::class);
         $modal_form->handleRequest($request);
         $id = $film->getId();
-        //$user=$place
 
 
 
-        if ($modal_form->isSubmitted() && $modal_form->isValid()) {
+
+        if ($modal_form->isValid()) {
 
             $pl2 = $modal_form->get('temp')->getData();
             $film = $this->getDoctrine()
@@ -61,55 +56,34 @@ class MailController extends Controller
             /** @var Place $place */
             $place = $this->getDoctrine()
                 ->getRepository(Place::class)
-               // ->findOneByFilms($id);
-                //меняю тут с ->findOneByFilms($id); на сложное условие
-                ->findOneBy(array('films'=>$id,'user'=>$this->getUser()));
-           // $asd=$place->getUser();
-          //  $dasdasd=$asd->getId();
+                ->findOneBy(array('films'=>$id,'email'=>$modal_form->get('mail')->getData()));
+
+            $name = $modal_form->get('name')->getData();//обращение к конкретному полю в форме и получение из него данных
+            $mail = $modal_form->get('mail')->getData();
             if (!$place) {
                 $place = new Place();
                 $place->setFilms($film);
                 $place->setNumPlace($pl2);
+                $place->setEmail($mail);
 
             } else {
                 $places = $place->getNumPlace();
                 $newPlace = $places . ',' . $pl2;
                 $place->setNumPlace($newPlace);
+                $place->setEmail($mail);
             }
-            if($mail_db->getMail()){
-                $kk=1;
-            }
-
-
-
-            $name = $modal_form->get('name')->getData();//обращение к конкретному полю в форме и получение из него данных
-            $mail = $modal_form->get('mail')->getData();
-
-            $em2=$this->getDoctrine()->getManager();
-            $mail_db->setMail($mail);
-            $em2->persist($mail_db);
-            $em2->flush();
-
-            $mailArray=$place->getUser();
-            $olduser=$place->getUser();
-            $place->setUser($mail_db);
             $em = $this->getDoctrine()->getManager();
             $em->persist($place);
             $em->flush();
-
-
-
             /**
              * @var \Swift_Mime_Message $message
              */
             $message = \Swift_Message::newInstance()
                 ->setSubject('Hello Email')
                 ->setFrom('ichichanshka@gmail.com')
-                ->setTo('ichichanuska@gmail.com')
+                ->setTo('exorcist1@mail.ru')
                 ->setBody('hello ' . $name . ' u are reserved placeses ' . $pl2 . ' this message will be send on email ' . $mail);
 
-
-            //$this->get('mailer')->send($message);
             $mailer = $this->get('mailer');
 
             $mailer->send($message);
@@ -120,21 +94,10 @@ class MailController extends Controller
             $transport = $this->get('swiftmailer.transport.real');
 
             $spool->flushQueue($transport);
-
-            //  }
             return $this->redirectToRoute('film_list');
         }
 
-        return array('film' => $film, 'form' => $form->createView(), 'modalForm' => $modal_form->createView());
+        return array('film' => $film, 'form' => $form->createView(), 'modalForm' => $modal_form->createView());// return new responce
     }
 
-    /**
-     * @Route("/film/place_reserved/mail", name="send_mile")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @internal param Request $request
-     */
-    public function sendEmailAction()
-    {
-
-    }
 }

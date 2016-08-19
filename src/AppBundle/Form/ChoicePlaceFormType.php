@@ -3,10 +3,9 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 class ChoicePlaceFormType extends AbstractType
 {
@@ -25,8 +24,8 @@ class ChoicePlaceFormType extends AbstractType
         if ($availability != null) {
         //    $availability->getNumPlace();
             $place = $availability;*/
-        $opt=$options['places']->getData();
-        $availability = $builder->getData();
+       // $opt=$options['places']->getData();
+        $availability = $options['places'];
         $availability=trim($availability);
         if ($availability != null) {
 //$availability->getNumPlace();

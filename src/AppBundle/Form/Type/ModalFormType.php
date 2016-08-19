@@ -14,19 +14,20 @@ class ModalFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add(
-            'name',
-            TextType::class,
-            array(
-                "attr" => array(
-                    'name' => "name",
-                    'maxlength' => 25,
-                    'size' => 40,
-                    'class' => 'form-control',
-                    'style' => 'margin-bottom 15px',
+        $builder
+            ->add(
+                'name',
+                TextType::class,
+                array(
+                    "attr" => array(
+                        'name' => "name",
+                        'maxlength' => 25,
+                        'size' => 40,
+                        'class' => 'form-control',
+                        'style' => 'margin-bottom 15px',
+                    )
                 )
             )
-        )
             ->add(
                 'mail',
                 EmailType::class,
@@ -35,18 +36,20 @@ class ModalFormType extends AbstractType
                         'name' => "mail",
                         'maxlength' => 25,
                         'size' => 40,
+                        'class'=>'form-control',
                     )
                 )
             )
             ->add(
                 'temp',
-                TextType::class,
+                HiddenType::class,
                 array(
                     "attr" => array(
                         'id' => "temp",
                         'name' => "temp",
                         'maxlength' => 25,
                         'size' => 40,
+                        'class'=>'form-control',
                     )
                 )
             )

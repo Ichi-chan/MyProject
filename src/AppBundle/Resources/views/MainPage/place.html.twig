@@ -27,37 +27,63 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
-            <form class="modal-content" method="post" action="{{ path('send_mile',{ 'id': film.id }) }}">
-                <div class="modal-header">
+
+            <!--<form class="modal-content">-->
+                {{ form_start(modalForm, {'attr':{'class':'modal-content'}}) }}
+                <!--<div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
+                </div>!-->
                 <div class="modal-body">
                     <strong>Enter ur Name</strong>
                     <p>{{ form_row( modalForm.name) }}</p>
                     <br>
                     <strong>Enter ur Mail Adress</strong>
-                    <p>{{ form_row( modalForm.mail) }}</p>
+                    <p>{{ form_row( modalForm.mail)}}</p>
                     <p>{{ form_row( modalForm.temp) }}</p>
                 </div>
                 <div class="modal-footer">
                     {{ form_row(modalForm.close) }}
                     {{ form_row(modalForm.sendmessage) }}
                 </div>
-            </form>
+            {{ form_end(modalForm) }}
+           <!-- </form>-->
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        $(function () {
+        $(document).ready(function () {
+
+            //отобразить сообщение, когда модальное окно будет полностью скрыто от пользователя
+            $("#myModal").on('hidden.bs.modal', function () {
+                $(".btn-click").toggleClass("btn-click");
+            });
+        });
+         $(function () {
+            $(".place-button").click(function () {
+                $(this).toggleClass("btn-click");
+            })
+            $("#myModal").on('show.bs.modal',function () {
+                var arrList = $('.btn-click').map(function(){
+                    return $(this).text();
+                }).get();
+                $("#modal_form_temp").val(arrList);
+
+            })
+        })
+
+
+       /* $(function () {
             var k = $("button");
             var key = 0;
             var str;
-            for (var i = 0; i < k.length; i++) {
-                var but = k[i];
+           // for (var i = 0; i < k.length; i++) {
+              //  var but = k[i];
                 $(but).click(function () {
-                    //alert(but);
+                  //  but.addClass("btn-click");
+                    $(this).toggleClass("btn-click");
+                    alert(but.class);
                     if (this.name != "choice_place_form[Reserved]" && this.name != "modal_form[close]" && this.name != "modal_form[sendmessage]" && this.name != "modal_form[X]") {
                         $(this).prop('disabled', true);
                         $(this).css('background-color', "#868686");
@@ -87,7 +113,16 @@
                         str = "";
                     }
                 })
-            }
-        })
-    </script>
+            //}
+        })*/
+</script>
 {% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .btn-click {  background-color: Green;}
+        .btn-click:hover{ background-color: #1C440C}
+        .btn-click:focus{background-color: green}
+    </style>
+{% endblock %}
+

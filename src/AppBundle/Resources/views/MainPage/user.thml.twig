@@ -1,0 +1,158 @@
+{% extends '@App/default/base.html.twig' %}
+{% block body %}
+    {{ form(form) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5  toppad  pull-left col-md-offset-3 ">
+                <br>
+            </div>
+            <div 4 >
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 "> <img alt="User Pic" src="{{ asset('films/append/camera_200.png') }}" class="img-circle img-responsive"> </div>
+
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Mail</th>
+                                        <th>Film</th>
+                                    </tr>
+                                    <tr>
+
+                                        <td>
+                                            <input  value="name" type="text"
+                                                   disabled>
+                                        </td>
+                                        <td>
+                                            <input  value="mail" type="text"
+                                                      disabled>
+                                        </td>
+                                        <td>
+                                            <input  value="film" type="text"
+                                                    disabled>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            <input  value="nam2" type="text"
+                                                    disabled>
+                                        </td>
+                                        <td>
+                                            <input  value="mail2" type="text"
+                                                    disabled>
+                                        </td>
+                                        <td>
+                                            <input  value="film2" type="text"
+                                                    disabled>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            <input  value="name3" type="text"
+                                                    disabled>
+                                        </td>
+                                        <td>
+                                            <input  value="mail3" type="text"
+                                                    disabled>
+                                        </td>
+                                        <td>
+                                             <input  value="film3" type="text"
+                                                      disabled>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading">Film list</div>
+        <div class="panel-body"></div>
+
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Mail</th>
+                <th>Film</th>
+                <th>Places</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input style="background: #2aabd2" value="Свободные места"; type="text"
+                            disabled>
+                </td>
+                <td>
+                    <button style="background: #2aabd2; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px; " value="Свободные места"; type="button"
+                            disabled></button>
+                </td>
+                <td>
+                    <button style="background: #2aabd2; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px; " value="Свободные места"; type="button"
+                            disabled></button>
+                </td>
+            </tr>
+
+            <tr>
+                <td> Mail</td>
+                <td>
+                    <button style="background: #868686; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+                <td>
+                    <button style="background: #868686; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+                <td>
+                    <button style="background: #868686; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td> Film</td>
+                <td>
+                    <button style="background: green; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+                <td>
+                    <button style="background: green; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+                <td>
+                    <button style="background: green; width: 80px; height: 40px;
+border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" value="Занятые места"; type="button" disabled></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    sometext-->
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends '@App/default/base.html.twig' %}
+<!--{% extends '@App/default/base.html.twig' %}
 
 {% block body %}
     <div>
@@ -46,34 +46,47 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reser
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <!--  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
-                <form class="modal-content" method="post" action="{{ path('send_mile') }}">
+                <   <form class="modal-content" method="post" action="{{ !path('send_mile',{ 'id': film.id }) }}">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" name="X"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                     </div>
                     <div class="modal-body">
-                       <strong>Enter ur Name</strong> <p><input name="name" maxlength="25" size="40" ></p>
+                        <strong>Enter ur Name</strong>
+                        <p>{{ !form_row( modalForm.name) }}</p>
                         <br>
-                        <strong>Enter ur Mail Adress</strong> <p><input name="mail" maxlength="25" size="40"></p>
-                          <p><input id="temp" name="temp" size="40" type="hidden"></p>
+                        <strong>Enter ur Mail Adress</strong>
+                        <p>{{! form_row( modalForm.mail) }}</p>
+                        <p>{{ !form_row( modalForm.temp) }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" name="close">Close</button>
-                        <button type="submit" class="btn btn-primary" name="save changes" id="save changes">Save changes</button>
+                        {{ !form_row(modalForm.close) }}
+                        {{ !form_row(modalForm.sendmessage) }}
                     </div>
                 </form>
             </div>
         </div>
-    </div>
+    </div>-->
 {% endblock %}
 
 
 {% block javascripts %}
 
     <script>
-        window.onload = function () {
+        $(document).ready(function(){
+
+            //отобразить сообщение, когда модальное окно будет полностью скрыто от пользователя
+            $("#myModal").on('hidden.bs.modal', function(){
+                alert("Модальное окно было успешно закрыто.");
+            });
+        });
+
+
+
+
+
+       /* window.onload = function () {
             var k = document.getElementsByTagName("button");
             var str;
             for (var i = 0; i < k.length; i++)
@@ -108,6 +121,6 @@ border-radius: 5px; box-shadow: 0 1px 3px; font-size: 20px" name="Reserv" >Reser
                         //ichichanshka@gmail.com
                     }
                 }
-        }
+        }*/
     </script>
-{% endblock %}
+{% endblock %}-->

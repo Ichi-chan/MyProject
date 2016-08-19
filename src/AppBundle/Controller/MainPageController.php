@@ -5,9 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Film;
 use AppBundle\Entity\Place;
+use AppBundle\Entity\User;
 use AppBundle\Form\ChoicePlaceFormType;
 use AppBundle\Form\FilmAddFormType;
 use AppBundle\Form\Type\ModalFormType;
+use AppBundle\Form\Type\UserFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -127,7 +129,7 @@ class MainPageController extends Controller
     }
 
     /**
-     * @Route("/films/pl/{id}", name="place_e")
+     * @Route("/films/pl/{id}", name="place_er")
      * @Template()
      * @param Film $film
      * @param Request $request
@@ -135,16 +137,16 @@ class MainPageController extends Controller
      */
     public function placeAction(Film $film, Request $request)
     {
-        $place=$this->getDoctrine()
-            ->getRepository(Place::class)
-            ->findOneByFilms($film->getId());
+        //$place=$this->getDoctrine()
+       //     ->getRepository(Place::class)
+     //       ->findOneByFilms($film->getId());
 
-        $form = $this->createForm(ChoicePlaceFormType::class, $place);
-        $form->handleRequest($request);
-        $modal_form=$this->createForm(ModalFormType::class);
+     //   $form = $this->createForm(ChoicePlaceFormType::class, $place);
+     //   $form->handleRequest($request);
+     //   $modal_form=$this->createForm(ModalFormType::class);
        // $modal_form->handleRequest();
 
-        return array('film' => $film, 'form' => $form->createView(),'modalForm'=>$modal_form->createView());
+      //  return array('film' => $film, 'form' => $form->createView(),'modalForm'=>$modal_form->createView());
     }
 
     /**
@@ -227,7 +229,7 @@ class MainPageController extends Controller
 
     /**
      * @Route("/film/place_reserved", name="plane_price")
-     * @Template("@App/MainPage/plane_price.html.twig")
+     * @Template("@App/MainPage/place.html.twig")
      */
     public function reservAction(Request $request)
     {
@@ -243,4 +245,22 @@ class MainPageController extends Controller
 
     }
 
+    /**
+     * @Route("/user/{id}", name="user_action")
+     * @Template("@App/MainPage/user.thml.twig")
+     * @param User $user
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @internal param User $user
+     */
+    public function userAction(User $user, Request $request)
+    {
+        //$id=$this->getUser();
+        //$repository=$this->getDoctrine()
+        //->getRepository('AppBundle:Place')
+        //    ->findByEmail($user->getEmail());
+        $form=$this->createForm(UserFormType::class,$user);
+        $form->handleRequest($request);
+        return array('form'=>$form->createView());
+    }
 }

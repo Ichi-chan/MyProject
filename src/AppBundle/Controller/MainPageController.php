@@ -246,21 +246,43 @@ class MainPageController extends Controller
     }
 
     /**
-     * @Route("/user/{id}", name="user_action")
+     * @Route("/user/", name="user_action")
      * @Template("@App/MainPage/user.thml.twig")
      * @param User $user
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @internal param User $user
      */
-    public function userAction(User $user, Request $request)
+    public function userAction(Request $request)
     {
-        //$id=$this->getUser();
-        //$repository=$this->getDoctrine()
-        //->getRepository('AppBundle:Place')
-        //    ->findByEmail($user->getEmail());
-        $form=$this->createForm(UserFormType::class,$user);
+        $user=$this->getUser();
+        $mail=$this->getUser()->getEmail();
+        $filmsList=$this->getDoctrine()
+            ->getRepository('AppBundle:Place')
+            ->findByEmail($mail);
+
+
+      //  $ff=$filmsList->getFilms()->toArray();
+         //   $this->getDoctrine()
+         //   ->getRepository('AppBundle:Film')
+            //->findById($filmsList);
+       // foreach ($filmsList as $film)
+       // {
+           // $mas=$film->getFilms();
+            //$aa=$mas[''];
+            //$ww=$this->getDoctrine()
+           // ->getRepository('AppBundle:Film')
+            //->findOneBy($mas['id']);
+       // }
+        $filmName="";
+        foreach ($filmsList as $film) {
+            $filmName =$filmName.','. $film->getFilms()->getName();
+        }
+        $form=$this->createForm(UserFormType::class,null,['filmName'=>$filmName]);
         $form->handleRequest($request);
-        return array('form'=>$form->createView());
+
+        //$form = $this->createForm(ChoicePlaceFormType::class, null, ['places' => $mas]);
+
+        return array('film'=>$filmsList, 'form'=>$form->createView());
     }
 }

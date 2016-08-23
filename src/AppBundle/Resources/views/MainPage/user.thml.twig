@@ -1,12 +1,11 @@
 {% extends '@App/default/base.html.twig' %}
 {% block body %}
-    {{ form(form) }}
     <div class="container">
         <div class="row">
             <div class="col-md-5  toppad  pull-left col-md-offset-3 ">
                 <br>
             </div>
-            <div 4 >
+            <div >
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title"></h3>
@@ -19,59 +18,22 @@
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Mail</th>
                                         <th>Film</th>
+                                        <th>Place</th>
                                     </tr>
+                                    {% for films in film %}
                                     <tr>
 
                                         <td>
-                                            <input  value="name" type="text"
-                                                   disabled>
+                                            <a href="{{ path('films_details', {'id':films.films.id}) }}">
+                                                {{ films.films.name }} </a>
                                         </td>
                                         <td>
-                                            <input  value="mail" type="text"
-                                                      disabled>
-                                        </td>
-                                        <td>
-                                            <input  value="film" type="text"
-                                                    disabled>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-
-                                        <td>
-                                            <input  value="nam2" type="text"
-                                                    disabled>
-                                        </td>
-                                        <td>
-                                            <input  value="mail2" type="text"
-                                                    disabled>
-                                        </td>
-                                        <td>
-                                            <input  value="film2" type="text"
-                                                    disabled>
+                                            {{ films.getNumPlace }}
                                         </td>
 
                                     </tr>
-
-                                    <tr>
-
-                                        <td>
-                                            <input  value="name3" type="text"
-                                                    disabled>
-                                        </td>
-                                        <td>
-                                            <input  value="mail3" type="text"
-                                                    disabled>
-                                        </td>
-                                        <td>
-                                             <input  value="film3" type="text"
-                                                      disabled>
-                                        </td>
-                                    </tr>
-
+                                        {% endfor %}
                                     </tbody>
                                 </table>
 
@@ -87,9 +49,6 @@
             </div>
         </div>
     </div>
-
-
-
 
     <!--<div class="panel panel-default">
         <div class="panel-heading">Film list</div>
